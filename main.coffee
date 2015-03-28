@@ -58,9 +58,14 @@ playMorseCode = (code) ->
       resolve()
     , pattern.reduce (a,b) -> a+b
 
+start = ->
+  playMorseStr $('#sourceText').val()
+  .then ->
+    start()
+
 $ ->
   info "start"
   return if typeof navigator?.vibrate isnt 'function'
   info "navigator.vibrate found"
 
-  playMorseStr $('#sourceText').val()
+  start()
