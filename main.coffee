@@ -30,16 +30,16 @@ morseCode =
   Y: "-.--"
   Z: "--.."
 
+sleep = (msec) ->
+  return new Promise (resolve) ->
+    setTimeout ->
+      resolve()
+    , msec
 
 playMorseStr = (str) ->
   Promise.each str.split(''), (c) ->
     playMorseCode c
-    .then ->
-      return new Promise (resolve, reject) ->
-        setTimeout ->
-          resolve()
-        , 1000
-
+    .then -> sleep 1000
 
 playMorseCode = (code) ->
   return new Promise (resolve, reject) ->
@@ -59,7 +59,11 @@ playMorseCode = (code) ->
     , pattern.reduce (a,b) -> a+b
 
 start = ->
-  playMorseStr $('#sourceText').val()
+  str = $('#sourceText').val()
+  info "play \"#{str}\""
+  playMorseStr str
+  .then ->
+    sleep 1000
   .then ->
     start()
 
