@@ -69,7 +69,8 @@ start = ->
 
 $ ->
   info "start"
-  return if typeof navigator?.vibrate isnt 'function'
+  if typeof navigator?.vibrate isnt 'function'
+    return info "noavigator.vibrate not found"
   info "navigator.vibrate found"
 
   start()
