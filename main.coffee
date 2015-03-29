@@ -43,8 +43,8 @@ playMorseStr = (str) ->
 
 playMorseCode = (code) ->
   return new Promise (resolve, reject) ->
-    return reject "'#{code}'.length must be 1" if code.length isnt 1
-    return reject "A-Z is ok" unless /[a-z]/i.test code
+    return reject "\"#{code}\".length must be 1" if code.length isnt 1
+    return reject "\"#{code}\": A-Z is ok" unless /^[a-z]$/i.test code
     code = code.toUpperCase()
     pattern = morseCode[code].split('').join(' ').split('').map (i) ->
       switch i
@@ -66,6 +66,10 @@ start = ->
     sleep 1000
   .then ->
     start()
+  .catch (err) ->
+    info err
+    sleep 3000
+    .then -> start()
 
 $ ->
   info "start"
